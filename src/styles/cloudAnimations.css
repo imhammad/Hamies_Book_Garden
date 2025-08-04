@@ -1,0 +1,50 @@
+.cloud {
+  position: absolute;
+  
+  animation: floatCloud 30s ease-in-out infinite;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+.cloud1 {
+  top: 0%;
+  left: 45%;
+  animation-delay: 0s;
+  width: 350px;
+}
+
+.cloud2 {
+  top: 7%;
+  left: 4%;
+  animation-delay: 5s;
+}
+
+.cloud3 {
+  top: 25%;
+  left: 20%;
+  animation-delay: 10s;
+  width: 350px;
+}
+
+.cloud4 {
+  top: 38%;
+  left: 60%;
+  animation-delay: 3s;
+  width: 250px;
+}
+
+.cloud5 {
+  top: 8%;
+  left: 65%;
+  animation-delay: 8s;
+  width: 350px;
+}
+
+@keyframes floatCloud {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+}
