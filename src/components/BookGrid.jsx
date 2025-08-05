@@ -38,16 +38,16 @@ const books = [
 
 const BookGrid = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 bg-black text-white">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 p-8 bg-black text-white">
       {books.map((book, index) => (
         <div
           key={index}
-          className="relative overflow-hidden rounded-2xl shadow-lg group bg-gray-900"
+          className="relative overflow-hidden rounded-2xl shadow-lg group bg-gray-900 w-full max-w-[240px] mx-auto"
         >
           <img
             src={book.image}
             alt={book.title}
-            className="w-full h-72 object-cover group-hover:brightness-75 transition duration-300"
+            className="w-full h-[360px] object-cover group-hover:brightness-75 transition duration-300"
           />
           <div className="p-4 text-center font-semibold text-lg">
             {book.title}
@@ -67,6 +67,3 @@ const BookGrid = () => {
 };
 
 export default BookGrid;
-
-// For routing:
-// Create a BookDetail.jsx page like below:
