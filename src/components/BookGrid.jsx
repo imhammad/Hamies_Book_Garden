@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BookDetail from "./BookDetail";
+import GradientButton from "./GradientButton";
+
 
 const books = [
+  // Fantasy
+
   {
     title: "The Hobbit",
     author: "J.R.R. Tolkien",
@@ -33,11 +38,51 @@ const books = [
     image: "/images/thrones.jpg",
     summary:
       "In a land where summers can last for decades and winters a lifetime..."
+  },
+  
+  // Science Fiction
+
+  {
+    title: "Dune",
+    author: "Frank Herbert",
+    year: 1965,
+    image: "/images/dune.png",
+    summary:
+      "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family given control of the planet. As Paul and his family are betrayed, they must flee into the desert and find refuge among the Fremen, Arrakis' native inhabitants. Paul will learn to harness his unique gifts to rise up and challenge the galactic empire, all while dealing with the political and religious machinations surrounding 'the spice,' the most valuable substance in the universe."
+  },
+  {
+    title: "Nineteen Eighty-Four",
+    author: "George Orwell",
+    year: 1949,
+    image: "/images/1984.png",
+    summary:
+      "The year is 1984. The world is divided into three totalitarian superstates, Oceania, Eurasia, and Eastasia. Winston Smith, a low-ranking member of the ruling Party in London, lives a miserable existence, constantly watched by the telescreens and the Thought Police. He harbors a secret hatred for the Party and dreams of rebellion, a dream that leads him down a dangerous path that may cost him everything."
+  },
+  {
+    title: "The Hitchhiker's Guide to the Galaxy",
+    author: "Douglas Adams",
+    year: 1979,
+    image: "/images/hitchhiker.jpg",
+    summary:
+      "Arthur Dent's day goes from bad to worse when his home is demolished to make way for a new bypass. Seconds later, Earth is demolished to make way for a new hyperspace bypass. Arthur is saved by his friend Ford Prefect, a researcher for the titular guide, and the two embark on a surreal and hilarious journey through space, encountering a variety of bizarre aliens and existential questions."
+  },
+  {
+    title: "Do Androids Dream of Electric Sheep?",
+    author: "Philip K. Dick",
+    year: 1968,
+    image: "/images/android.jpg",
+    summary:
+      "In a post-apocalyptic San Francisco, bounty hunter Rick Deckard is tasked with 'retiring' rogue androids who have escaped from Mars. But as he hunts down a group of advanced androids, he begins to question what it means to be human and what separates man from machine."
   }
+  
 ];
+
+      
 
 const BookGrid = () => {
   return (
+    <>
+    <GradientButton />
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 p-8 bg-black text-white">
       {books.map((book, index) => (
         <div
@@ -59,10 +104,12 @@ const BookGrid = () => {
             >
               Read More
             </Link>
+       
           </div>
         </div>
       ))}
     </div>
+  </>
   );
 };
 
