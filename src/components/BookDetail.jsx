@@ -72,7 +72,7 @@ const BookDetail = () => {
   if (!book) return <div className="text-white p-8">Book not found.</div>;
 
   return (
-    <div className="text-white p-8 bg-black min-h-screen">
+    <div className="text-white p-8 bg-black min-h-screen w-[30%]" >
       <h1 className="text-3xl font-bold mb-4">{book.title}</h1>
       <p className="mb-2"><strong>Author:</strong> {book.author}</p>
       <p className="mb-2"><strong>Publishing Year:</strong> {book.year}</p>

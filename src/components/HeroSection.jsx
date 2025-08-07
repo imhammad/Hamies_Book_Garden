@@ -78,7 +78,7 @@ const HeroSection = () => {
         style={{ y: yGrass }}
         src={grass}
         alt="grass"
-        className="absolute bottom-[-60px] left-0 w-full scale-[1.6] z-40"
+        className="absolute bottom-[-30px] left-0 w-full scale-[1.4] z-40"
       />
 
       {/* Clouds (parallax X + Y movement) */}

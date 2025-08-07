@@ -5,6 +5,7 @@ import BookGrid from './components/BookGrid';
 import BookDetail from './components/BookDetail';
 
 import { Routes, Route } from 'react-router-dom';
+import SignUpButton from './components/SignUpButton';
 
 const App = () => {
 
@@ -13,6 +14,7 @@ const App = () => {
         <HeroSection />
         {/* <BookGrid />
         <BookDetail /> */}
+        <SignUpButton />
 
         <Routes>
           <Route path="/" element={<BookGrid />} />
