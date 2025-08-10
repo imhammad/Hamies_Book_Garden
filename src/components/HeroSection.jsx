@@ -14,6 +14,7 @@ import grass from '../assets/grass.png';
 import background from '../assets/background.png';
 import mountain from '../assets/mountain.png';
 import sideMountains from '../assets/side_mountains.png';
+import SignUpButton from './SignUpButton';
 
 const HeroSection = () => {
   const ref = useRef(null);
@@ -29,7 +30,10 @@ const HeroSection = () => {
   const yCloud = useTransform(scrollY, [0, 300], [0, 20]);
 
   return (
+    
     <div ref={ref} className="relative w-full h-screen overflow-hidden bg-black">
+
+      
       {/* Background */}
       <motion.img
         src={background}
@@ -39,6 +43,13 @@ const HeroSection = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       />
+
+      <div className='absolute top-0 right-0 p-4 z-50'>
+         <SignUpButton />
+      </div>
+     
+
+      
 
       {/* Moon */}
       <motion.img

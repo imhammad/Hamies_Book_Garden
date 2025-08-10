@@ -14,7 +14,7 @@ const App = () => {
         <HeroSection />
         {/* <BookGrid />
         <BookDetail /> */}
-        <SignUpButton />
+        
 
         <Routes>
           <Route path="/" element={<BookGrid />} />

@@ -1,7 +1,7 @@
 .cloud {
   position: absolute;
   
-  animation: floatCloud 30s ease-in-out infinite;
+  animation: floatCloud 20s ease-in-out infinite;
   opacity: 0.8;
   z-index: 10;
 }
