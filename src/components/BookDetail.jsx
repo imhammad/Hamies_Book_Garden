@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import ReviewSystem from "./ReviewSystem";
 
 const books = [
   // Fantasy
@@ -72,12 +73,20 @@ const BookDetail = () => {
   if (!book) return <div className="text-white p-8">Book not found.</div>;
 
   return (
-    <div className="text-white p-8 bg-black min-h-screen w-[30%]" >
-      <h1 className="text-3xl font-bold mb-4">{book.title}</h1>
-      <p className="mb-2"><strong>Author:</strong> {book.author}</p>
-      <p className="mb-2"><strong>Publishing Year:</strong> {book.year}</p>
-      <p className="mt-4">{book.summary}</p>
-    </div>
+    <div className="bg-black text-white min-h-screen p-8 flex gap-8">
+      {/* Left Side - Book Info */}
+      <div className="w-1/2">
+        <h1 className="text-3xl font-bold mb-4">{book.title}</h1>
+        <p className="mb-2"><strong>Author:</strong> {book.author}</p>
+        <p className="mb-2"><strong>Publishing Year:</strong> {book.year}</p>
+        <p className="mt-4">{book.summary}</p>
+      </div>
+
+      {/* Right Side - Reviews */}
+      <div className="w-1/2">
+        <ReviewSystem bookTitle={book.title} />
+      </div>
+  </div>
   );
 };
 
