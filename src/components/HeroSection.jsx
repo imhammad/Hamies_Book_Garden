@@ -20,20 +20,20 @@ const HeroSection = () => {
   const ref = useRef(null);
   const { scrollY } = useScroll();
 
-  // Parallax transforms
-  const yMoon = useTransform(scrollY, [0, 300], [0, 30]);
-  const yMountains = useTransform(scrollY, [0, 300], [0, 20]);
-  const yGrass = useTransform(scrollY, [0, 300], [0, -20]);
-  const yLand = useTransform(scrollY, [0, 300], [0, 10]);
+  // Bigger motion ranges for stronger parallax
+  const yMoon = useTransform(scrollY, [0, 500], [0, 80]);
+  const yMountains = useTransform(scrollY, [0, 500], [0, 60]);
+  const yGrass = useTransform(scrollY, [0, 500], [0, -50]);
+  const yLand = useTransform(scrollY, [0, 500], [0, 40]);
 
-  const xCloud = useTransform(scrollY, [0, 300], [0, 40]);
-  const yCloud = useTransform(scrollY, [0, 300], [0, 20]);
+  const xCloud = useTransform(scrollY, [0, 500], [0, 100]);
+  const yCloud = useTransform(scrollY, [0, 500], [0, 50]);
+
+  const springConfig = { type: 'spring', stiffness: 50, damping: 15, mass: 1.5 };
 
   return (
-    
     <div ref={ref} className="relative w-full h-screen overflow-hidden bg-black">
 
-      
       {/* Background */}
       <motion.img
         src={background}
@@ -44,16 +44,14 @@ const HeroSection = () => {
         transition={{ duration: 1 }}
       />
 
-      <div className='absolute top-0 right-0 p-4 z-50'>
-         <SignUpButton />
+      <div className="absolute top-0 right-0 p-4 z-50">
+        <SignUpButton />
       </div>
-     
-
-      
 
       {/* Moon */}
       <motion.img
         style={{ y: yMoon }}
+        transition={springConfig}
         src={moon}
         alt="moon"
         className="absolute top-[22%] left-[24%] w-[640px] z-10"
@@ -62,6 +60,7 @@ const HeroSection = () => {
       {/* Side Mountains */}
       <motion.img
         style={{ y: yMountains }}
+        transition={springConfig}
         src={sideMountains}
         alt="side-mountains"
         className="absolute bottom-0 w-full z-35"
@@ -70,63 +69,47 @@ const HeroSection = () => {
       {/* Central Mountain */}
       <motion.img
         style={{ y: yMountains }}
+        transition={springConfig}
         src={mountain}
         alt="mountain"
         className="absolute bottom-0 left-0 w-[80%] z-20"
-        transition={{ type: 'spring', stiffness: 80 }}
       />
 
       {/* Land */}
       <motion.img
         style={{ y: yLand }}
+        transition={springConfig}
         src={land}
         alt="land"
         className="absolute bottom-0 w-full z-30"
       />
 
-      {/* Grass (fills full width + transition) */}
+      {/* Grass */}
       <motion.img
         style={{ y: yGrass }}
+        transition={springConfig}
         src={grass}
         alt="grass"
         className="absolute bottom-[-30px] left-0 w-full scale-[1.4] z-40"
       />
 
-      {/* Clouds (parallax X + Y movement) */}
-      <motion.img
-        style={{ x: xCloud, y: yCloud }}
-        src={cloud1}
-        alt="cloud1"
-        className="cloud cloud1"
-      />
-      <motion.img
-        style={{ x: xCloud, y: yCloud }}
-        src={cloud2}
-        alt="cloud2"
-        className="cloud cloud2"
-      />
-      <motion.img
-        style={{ x: xCloud, y: yCloud }}
-        src={cloud3}
-        alt="cloud3"
-        className="cloud cloud3"
-      />
-      <motion.img
-        style={{ x: xCloud, y: yCloud }}
-        src={cloud4}
-        alt="cloud4"
-        className="cloud cloud4"
-      />
-      <motion.img
-        style={{ x: xCloud, y: yCloud }}
-        src={cloud5}
-        alt="cloud5"
-        className="cloud cloud5"
-      />
+      {/* Clouds */}
+      {[cloud1, cloud2, cloud3, cloud4, cloud5].map((cloud, i) => (
+        <motion.img
+          key={i}
+          style={{ x: xCloud, y: yCloud }}
+          transition={springConfig}
+          src={cloud}
+          alt={`cloud${i+1}`}
+          className={`cloud cloud${i+1}`}
+        />
+      ))}
 
       {/* Title */}
       <div className="absolute bottom-[10%] w-full text-center z-50">
-        <h1 className="text-white text-5xl font-bold drop-shadow-lg">Hammie’s Book Garden</h1>
+        <h1 className="text-white text-5xl font-bold drop-shadow-lg">
+          Hammie’s Book Garden
+        </h1>
       </div>
     </div>
   );
