@@ -1,6 +1,7 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { supabase } from '../supabaseClient';
 import '../styles/cloudAnimations.css';
 
 import cloud1 from '../assets/cloud1.png';
@@ -19,20 +20,50 @@ import SignUpButton from './SignUpButton';
 const HeroSection = () => {
   const ref = useRef(null);
   const { scrollY } = useScroll();
+  const [user, setUser] = useState(null);
 
-  // Bigger motion ranges for stronger parallax
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data?.user) setUser(data.user);
+    };
+    getUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
   const yMoon = useTransform(scrollY, [0, 500], [0, 80]);
   const yMountains = useTransform(scrollY, [0, 500], [0, 60]);
   const yGrass = useTransform(scrollY, [0, 500], [0, -50]);
   const yLand = useTransform(scrollY, [0, 500], [0, 40]);
-
   const xCloud = useTransform(scrollY, [0, 500], [0, 100]);
   const yCloud = useTransform(scrollY, [0, 500], [0, 50]);
-
   const springConfig = { type: 'spring', stiffness: 50, damping: 15, mass: 1.5 };
 
   return (
     <div ref={ref} className="relative w-full h-screen overflow-hidden bg-black">
+
+      {/* Username top-left */}
+      {user && (
+        <div className="absolute top-4 left-4 text-white text-lg font-semibold z-50">
+          Welcome, {user.user_metadata?.username || "User"}
+        </div>
+      )}
+
+      {/* SignUp/Login button top-right */}
+      <div className="absolute top-0 right-0 p-4 z-50">
+        <SignUpButton />
+      </div>
 
       {/* Background */}
       <motion.img
@@ -44,54 +75,25 @@ const HeroSection = () => {
         transition={{ duration: 1 }}
       />
 
-      <div className="absolute top-0 right-0 p-4 z-50">
-        <SignUpButton />
-      </div>
-
       {/* Moon */}
-      <motion.img
-        style={{ y: yMoon }}
-        transition={springConfig}
-        src={moon}
-        alt="moon"
-        className="absolute top-[22%] left-[24%] w-[640px] z-10"
-      />
+      <motion.img style={{ y: yMoon }} transition={springConfig} src={moon} alt="moon"
+        className="absolute top-[22%] left-[24%] w-[640px] z-10" />
 
       {/* Side Mountains */}
-      <motion.img
-        style={{ y: yMountains }}
-        transition={springConfig}
-        src={sideMountains}
-        alt="side-mountains"
-        className="absolute bottom-0 w-full z-35"
-      />
+      <motion.img style={{ y: yMountains }} transition={springConfig} src={sideMountains}
+        alt="side-mountains" className="absolute bottom-0 w-full z-35" />
 
       {/* Central Mountain */}
-      <motion.img
-        style={{ y: yMountains }}
-        transition={springConfig}
-        src={mountain}
-        alt="mountain"
-        className="absolute bottom-0 left-0 w-[80%] z-20"
-      />
+      <motion.img style={{ y: yMountains }} transition={springConfig} src={mountain}
+        alt="mountain" className="absolute bottom-0 left-0 w-[80%] z-20" />
 
       {/* Land */}
-      <motion.img
-        style={{ y: yLand }}
-        transition={springConfig}
-        src={land}
-        alt="land"
-        className="absolute bottom-0 w-full z-30"
-      />
+      <motion.img style={{ y: yLand }} transition={springConfig} src={land}
+        alt="land" className="absolute bottom-0 w-full z-30" />
 
       {/* Grass */}
-      <motion.img
-        style={{ y: yGrass }}
-        transition={springConfig}
-        src={grass}
-        alt="grass"
-        className="absolute bottom-[-30px] left-0 w-full scale-[1.4] z-40"
-      />
+      <motion.img style={{ y: yGrass }} transition={springConfig} src={grass}
+        alt="grass" className="absolute bottom-[-30px] left-0 w-full scale-[1.4] z-40" />
 
       {/* Clouds */}
       {[cloud1, cloud2, cloud3, cloud4, cloud5].map((cloud, i) => (
@@ -100,8 +102,8 @@ const HeroSection = () => {
           style={{ x: xCloud, y: yCloud }}
           transition={springConfig}
           src={cloud}
-          alt={`cloud${i+1}`}
-          className={`cloud cloud${i+1}`}
+          alt={`cloud${i + 1}`}
+          className={`cloud cloud${i + 1}`}
         />
       ))}
 

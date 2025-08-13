@@ -9,10 +9,22 @@ export default function ReviewSystem({ bookTitle }) {
   const [user, setUser] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
-  // Fetch reviews when component mounts
   useEffect(() => {
     fetchReviews();
     checkUser();
+
+    // Listen for auth changes (login/logout) so username updates instantly
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, [bookTitle]);
 
   const checkUser = async () => {
@@ -42,10 +54,13 @@ export default function ReviewSystem({ bookTitle }) {
       return;
     }
 
+    const username = user.user_metadata?.username || "Anonymous";
+
     const { error } = await supabase.from("reviews").insert([
       {
         book_title: bookTitle,
         user_id: user.id,
+        username,
         rating,
         comment,
       },
@@ -62,9 +77,7 @@ export default function ReviewSystem({ bookTitle }) {
 
   const averageRating =
     reviews.length > 0
-      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(
-          1
-        )
+      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
       : 0;
 
   return (
@@ -134,6 +147,14 @@ export default function ReviewSystem({ bookTitle }) {
               key={r.id}
               className="bg-gray-800 p-4 rounded-lg shadow-md text-white"
             >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm font-bold text-yellow-400">
+                  {r.username || "Unknown"}
+                </span>
+                <span className="text-xs text-gray-400">
+                  {new Date(r.created_at).toLocaleDateString()}
+                </span>
+              </div>
               <div className="flex items-center mb-1">
                 {[...Array(5)].map((_, i) => (
                   <svg
@@ -149,15 +170,20 @@ export default function ReviewSystem({ bookTitle }) {
                 ))}
               </div>
               <p className="text-sm">{r.comment}</p>
-              <span className="text-xs text-gray-400">
-                {new Date(r.created_at).toLocaleDateString()}
-              </span>
             </div>
           ))
         )}
       </div>
 
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      {showAuthModal && (
+        <AuthModal
+          onClose={() => setShowAuthModal(false)}
+          onAuthSuccess={(loggedInUser) => {
+            setUser(loggedInUser);
+            setShowAuthModal(false);
+          }}
+        />
+      )}
     </div>
   );
 }
