@@ -42,6 +42,11 @@ const HeroSection = () => {
     };
   }, []);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null); // update instantly
+  };
+
   const yMoon = useTransform(scrollY, [0, 500], [0, 80]);
   const yMountains = useTransform(scrollY, [0, 500], [0, 60]);
   const yGrass = useTransform(scrollY, [0, 500], [0, -50]);
@@ -55,14 +60,23 @@ const HeroSection = () => {
 
       {/* Username top-left */}
       {user && (
-        <div className="absolute top-4 left-4 text-white text-lg font-semibold z-50">
+        <div className="absolute top-4 left-4 text-white text-lg font-semibold z-50 drop-shadow-lg">
           Welcome, {user.user_metadata?.username || "User"}
         </div>
       )}
 
-      {/* SignUp/Login button top-right */}
-      <div className="absolute top-0 right-0 p-4 z-50">
-        <SignUpButton />
+      {/* Top-right buttons */}
+      <div className="absolute top-0 right-0 p-4 z-50 flex space-x-3">
+        {user ? (
+          <button
+            onClick={handleLogout}
+            className="px-5 py-2 rounded-xl backdrop-blur-md bg-white/20 text-white font-semibold shadow-lg border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105"
+          >
+            Logout
+          </button>
+        ) : (
+          <SignUpButton />
+        )}
       </div>
 
       {/* Background */}
