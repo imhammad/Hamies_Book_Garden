@@ -85,6 +85,31 @@ const books = [
     summary:
       "Lily Bloom has always admired her parents' enduring love, despite growing up in a home filled with domestic violence. After moving to Boston and starting her own business, she meets a charming neurosurgeon named Ryle Kincaid. Their connection is instant and intense, but his aversion to relationships and her own painful past make things complicated. When her first love, Atlas Corrigan, unexpectedly re-enters her life, Lily is forced to confront the difficult truths of her past and present and make an impossible choice about her future."
   },
+
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins Reid",
+    year: 2017,
+    image: "/images/EndsWithUs.png",
+    summary:
+      "Reclusive Hollywood icon Evelyn Hugo, now in her late seventies, is finally ready to tell the story of her glamorous and scandalous life. She chooses an unknown magazine reporter, Monique Grant, to write her biography. As Evelyn reveals her journey from aspiring actress to celebrated star, she recounts her rise to fame and the seven husbands she had along the way. Monique listens with rapt attention, realizing that their lives are more intertwined than she could have ever imagined."
+  },
+  {
+    title: "Me Before You",
+    author: "Jojo Moyes",
+    year: 2012,
+    image: "/images/EndsWithUs.png",
+    summary:
+      "Louisa Clark, an ordinary girl from a small town, is hired to care for Will Traynor, a wealthy young man who was paralyzed in a tragic accident. Will is cynical and has given up on life, but Lou is determined to show him that life is still worth living. As she tries to bring joy back into his world, she finds her own world expanding in ways she never expected, and the two of them form an unbreakable bond. This book is a poignant love story that explores difficult themes of love, loss, and living life to the fullest."
+  },
+  {
+    title: "The Fault in Our Stars",
+    author: "John Green",
+    year: 2012,
+    image: "/images/EndsWithUs.png",
+    summary:
+      "Hazel Grace Lancaster, a teenager with thyroid cancer that has spread to her lungs, is forced by her parents to attend a cancer support group. There, she meets and falls in love with Augustus 'Gus' Waters, a charismatic and witty boy who is in remission from osteosarcoma. Together, they embark on a journey that takes them from their local support group to Amsterdam to meet their favorite reclusive author, exploring themes of life, love, and what it means to truly live despite a terminal illness."
+  }
   
 ];
 

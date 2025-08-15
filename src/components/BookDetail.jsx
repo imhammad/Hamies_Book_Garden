@@ -90,11 +90,11 @@ const books = [
       "Louisa Clark, an ordinary girl from a small town, is hired to care for Will Traynor, a wealthy young man who was paralyzed in a tragic accident. Will is cynical and has given up on life, but Lou is determined to show him that life is still worth living. As she tries to bring joy back into his world, she finds her own world expanding in ways she never expected, and the two of them form an unbreakable bond. This book is a poignant love story that explores difficult themes of love, loss, and living life to the fullest."
   },
   {
-    title: "Do Androids Dream of Electric Sheep?",
-    author: "Philip K. Dick",
-    year: 1968,
+    title: "The Fault in Our Stars",
+    author: "John Green",
+    year: 2012,
     summary:
-      "In a post-apocalyptic San Francisco, bounty hunter Rick Deckard is tasked with 'retiring' rogue androids who have escaped from Mars. But as he hunts down a group of advanced androids, he begins to question what it means to be human and what separates man from machine."
+      "Hazel Grace Lancaster, a teenager with thyroid cancer that has spread to her lungs, is forced by her parents to attend a cancer support group. There, she meets and falls in love with Augustus 'Gus' Waters, a charismatic and witty boy who is in remission from osteosarcoma. Together, they embark on a journey that takes them from their local support group to Amsterdam to meet their favorite reclusive author, exploring themes of life, love, and what it means to truly live despite a terminal illness."
   }
 
 ];
