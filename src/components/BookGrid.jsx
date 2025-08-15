@@ -73,7 +73,18 @@ const books = [
     image: "/images/android.jpg",
     summary:
       "In a post-apocalyptic San Francisco, bounty hunter Rick Deckard is tasked with 'retiring' rogue androids who have escaped from Mars. But as he hunts down a group of advanced androids, he begins to question what it means to be human and what separates man from machine."
-  }
+  },
+
+  //  Romance Category
+
+    {
+    title: "It Ends With Us",
+    author: "Colleen Hoover",
+    year: 2016,
+    image: "/images/EndsWithUs.png",
+    summary:
+      "Lily Bloom has always admired her parents' enduring love, despite growing up in a home filled with domestic violence. After moving to Boston and starting her own business, she meets a charming neurosurgeon named Ryle Kincaid. Their connection is instant and intense, but his aversion to relationships and her own painful past make things complicated. When her first love, Atlas Corrigan, unexpectedly re-enters her life, Lily is forced to confront the difficult truths of her past and present and make an impossible choice about her future."
+  },
   
 ];
 
