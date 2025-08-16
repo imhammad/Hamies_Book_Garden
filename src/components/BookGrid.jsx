@@ -90,7 +90,7 @@ const books = [
     title: "The Seven Husbands of Evelyn Hugo",
     author: "Taylor Jenkins Reid",
     year: 2017,
-    image: "/images/EndsWithUs.png",
+    image: "/images/SevenHusbands.jpg",
     summary:
       "Reclusive Hollywood icon Evelyn Hugo, now in her late seventies, is finally ready to tell the story of her glamorous and scandalous life. She chooses an unknown magazine reporter, Monique Grant, to write her biography. As Evelyn reveals her journey from aspiring actress to celebrated star, she recounts her rise to fame and the seven husbands she had along the way. Monique listens with rapt attention, realizing that their lives are more intertwined than she could have ever imagined."
   },
@@ -98,7 +98,7 @@ const books = [
     title: "Me Before You",
     author: "Jojo Moyes",
     year: 2012,
-    image: "/images/EndsWithUs.png",
+    image: "/images/MeBeforeYou.jpg",
     summary:
       "Louisa Clark, an ordinary girl from a small town, is hired to care for Will Traynor, a wealthy young man who was paralyzed in a tragic accident. Will is cynical and has given up on life, but Lou is determined to show him that life is still worth living. As she tries to bring joy back into his world, she finds her own world expanding in ways she never expected, and the two of them form an unbreakable bond. This book is a poignant love story that explores difficult themes of love, loss, and living life to the fullest."
   },
@@ -106,7 +106,7 @@ const books = [
     title: "The Fault in Our Stars",
     author: "John Green",
     year: 2012,
-    image: "/images/EndsWithUs.png",
+    image: "/images/FaultInStars.jpg",
     summary:
       "Hazel Grace Lancaster, a teenager with thyroid cancer that has spread to her lungs, is forced by her parents to attend a cancer support group. There, she meets and falls in love with Augustus 'Gus' Waters, a charismatic and witty boy who is in remission from osteosarcoma. Together, they embark on a journey that takes them from their local support group to Amsterdam to meet their favorite reclusive author, exploring themes of life, love, and what it means to truly live despite a terminal illness."
   }
