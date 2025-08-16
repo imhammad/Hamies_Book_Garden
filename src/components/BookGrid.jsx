@@ -109,6 +109,44 @@ const books = [
     image: "/images/FaultInStars.jpg",
     summary:
       "Hazel Grace Lancaster, a teenager with thyroid cancer that has spread to her lungs, is forced by her parents to attend a cancer support group. There, she meets and falls in love with Augustus 'Gus' Waters, a charismatic and witty boy who is in remission from osteosarcoma. Together, they embark on a journey that takes them from their local support group to Amsterdam to meet their favorite reclusive author, exploring themes of life, love, and what it means to truly live despite a terminal illness."
+  },
+
+    //  Crime Category
+
+    {
+    title: "The Thursday Murder Club",
+    author: "Richard Osman",
+    year: 2020,
+    image: "/images/ThursdayMurder.jpg",
+    summary:
+      "In a peaceful retirement community, four friends—Elizabeth, Joyce, Ibrahim, and Ron—meet weekly to discuss unsolved cold cases. When a real murder occurs on their doorstep, the group of amateur sleuths find themselves in the middle of a live investigation. Using their unique skills and connections, they outwit the police and interview suspects, proving that age is just a number when it comes to solving a mystery. This book is a witty and charming take on the classic whodunit, filled with lovable characters and clever twists."
+
+  },
+
+  {
+    title: "The Silence of the Lambs",
+    author: "Thomas Harris",
+    year: 1988,
+    image: "/images/SilenceLambs.png",
+    summary:
+      "FBI trainee Clarice Starling is tasked with seeking the help of imprisoned cannibalistic serial killer Dr. Hannibal Lecter to catch another active serial killer, 'Buffalo Bill.' The psychological game between Starling and Lecter forms the core of the story, as Lecter manipulates and torments Starling while providing cryptic clues about Buffalo Bill. The book masterfully blends psychological horror with procedural crime, creating two of the most memorable characters in modern fiction."
+
+  },
+  {
+    title: "The Maltese Falcon",
+    author: "Dashiell Hammett",
+    year: 1930,
+    image: "/images/MalteseFalcon.webp",
+    summary:
+      "This hard-boiled classic introduces the cynical private detective Sam Spade. He's hired by a woman to find her sister, a case that quickly spirals into a hunt for a priceless, jewel-encrusted statuette of a falcon. As Spade navigates a web of deceit, double-crosses, and murder, he must contend with a cast of eccentric and dangerous characters, all willing to kill to get their hands on the enigmatic bird. Hammett's lean prose and gritty realism helped define the detective genre for generations to come."
+  },
+  {
+    title: "Gone Girl",
+    author: "Gillian Flynn",
+    year: 2012,
+    image: "/images/GoneGirl.jpg",
+    summary:
+      "On their fifth wedding anniversary, Nick Dunne's wife, Amy, disappears. The police and media quickly become suspicious of Nick, whose behavior seems less than genuine. The narrative is told in alternating perspectives between Nick and Amy's diary entries, revealing the complex, toxic nature of their relationship and the lies they've told each other. The book is a dark, suspenseful tale about marriage, media scrutiny, and the terrifying secrets people keep from those closest to them."
   }
   
 ];
