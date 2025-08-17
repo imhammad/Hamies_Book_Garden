@@ -7,6 +7,7 @@ import BookDetail from './components/BookDetail';
 import { Routes, Route } from 'react-router-dom';
 import SignUpButton from './components/SignUpButton';
 import Footer from './components/Footer';
+import Carousel from './components/Carousel';
 
 const App = () => {
 
@@ -21,6 +22,8 @@ const App = () => {
           <Route path="/" element={<BookGrid />} />
           <Route path="/book/:id" element={<BookDetail />} />
         </Routes>
+
+        <Carousel />
 
         <Footer />
         
