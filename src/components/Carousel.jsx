@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-const GAP_PX = 24;           // must match `gap-6`
-const VISIBLE_SLOTS = 5;     // 3 big in the middle, 2 small peeking
+const GAP_PX = 24;      // must match `gap-6`
+const VISIBLE_SLOTS = 5;    // 3 big in the middle, 2 small peeking
 
 const defaultBooks = [
   // Fantasy
@@ -258,7 +258,7 @@ const Carousel = ({ items = [] }) => {
                       className="w-full h-[360px] object-cover"
                     />
                     {/* Fixed caption height so bottoms align perfectly */}
-                    <div className="px-4 py-3 text-center font-semibold text-base md:text-lg h-[68px] flex items-center justify-center">
+                    <div className="px-4 py-3 text-center font-semibold text-base md:text-lg h-[68px] flex items-center justify-center text-white">
                       {book.title}
                     </div>
                     {/* CTA reveal on hover */}
