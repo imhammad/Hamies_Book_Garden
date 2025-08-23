@@ -1,40 +1,38 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-const books = [
-    
+const GAP_PX = 24;           // must match `gap-6`
+const VISIBLE_SLOTS = 5;     // 3 big in the middle, 2 small peeking
+
+const defaultBooks = [
   // Fantasy
   {
     title: "The Hobbit",
     author: "J.R.R. Tolkien",
     year: 1937,
     image: "/images/hobbit.jpg",
-    summary:
-      "Bilbo Baggins, a respectable, well-to-do hobbit, lives a comfortable life..."
+    summary: "Bilbo Baggins, a respectable, well-to-do hobbit, lives a comfortable life..."
   },
   {
     title: "A Wizard of Earthsea",
     author: "Ursula K. Le Guin",
     year: 1968,
     image: "/images/earthsea.webp",
-    summary:
-      "The island of Gont is a land of wizards. A boy, Sparrowhawk, is born..."
+    summary: "The island of Gont is a land of wizards. A boy, Sparrowhawk, is born..."
   },
   {
     title: "Good Omens",
     author: "Terry Pratchett and Neil Gaiman",
     year: 1990,
     image: "/images/omens.jpg",
-    summary:
-      "According to the Nice and Accurate Prophecies of Agnes Nutter..."
+    summary: "According to the Nice and Accurate Prophecies of Agnes Nutter..."
   },
   {
     title: "A Game of Thrones",
     author: "George R.R. Martin",
     year: 1996,
     image: "/images/thrones.jpg",
-    summary:
-      "In a land where summers can last for decades and winters a lifetime..."
+    summary: "In a land where summers can last for decades and winters a lifetime..."
   },
   // Science Fiction
   {
@@ -43,7 +41,7 @@ const books = [
     year: 1965,
     image: "/images/dune.png",
     summary:
-      "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family given control of the planet. As Paul and his family are betrayed, they must flee into the desert and find refuge among the Fremen, Arrakis' native inhabitants. Paul will learn to harness his unique gifts to rise up and challenge the galactic empire, all while dealing with the political and religious machinations surrounding 'the spice,' the most valuable substance in the universe."
+      "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides..."
   },
   {
     title: "Nineteen Eighty-Four",
@@ -51,7 +49,7 @@ const books = [
     year: 1949,
     image: "/images/1984.png",
     summary:
-      "The year is 1984. The world is divided into three totalitarian superstates, Oceania, Eurasia, and Eastasia. Winston Smith, a low-ranking member of the ruling Party in London, lives a miserable existence, constantly watched by the telescreens and the Thought Police. He harbors a secret hatred for the Party and dreams of rebellion, a dream that leads him down a dangerous path that may cost him everything."
+      "The year is 1984. The world is divided into three totalitarian superstates..."
   },
   {
     title: "The Hitchhiker's Guide to the Galaxy",
@@ -59,7 +57,7 @@ const books = [
     year: 1979,
     image: "/images/hitchhiker.jpg",
     summary:
-      "Arthur Dent's day goes from bad to worse when his home is demolished to make way for a new bypass. Seconds later, Earth is demolished to make way for a new hyperspace bypass. Arthur is saved by his friend Ford Prefect, a researcher for the titular guide, and the two embark on a surreal and hilarious journey through space, encountering a variety of bizarre aliens and existential questions."
+      "Arthur Dent's day goes from bad to worse when his home is demolished..."
   },
   {
     title: "Do Androids Dream of Electric Sheep?",
@@ -67,16 +65,16 @@ const books = [
     year: 1968,
     image: "/images/android.jpg",
     summary:
-      "In a post-apocalyptic San Francisco, bounty hunter Rick Deckard is tasked with 'retiring' rogue androids who have escaped from Mars. But as he hunts down a group of advanced androids, he begins to question what it means to be human and what separates man from machine."
+      "In a post-apocalyptic San Francisco, bounty hunter Rick Deckard is tasked..."
   },
-  // Romance Category
+  // Romance
   {
     title: "It Ends With Us",
     author: "Colleen Hoover",
     year: 2016,
     image: "/images/EndsWithUs.png",
     summary:
-      "Lily Bloom has always admired her parents' enduring love, despite growing up in a home filled with domestic violence. After moving to Boston and starting her own business, she meets a charming neurosurgeon named Ryle Kincaid. Their connection is instant and intense, but his aversion to relationships and her own painful past make things complicated. When her first love, Atlas Corrigan, unexpectedly re-enters her life, Lily is forced to confront the difficult truths of her past and present and make an impossible choice about her future."
+      "Lily Bloom has always admired her parents' enduring love..."
   },
   {
     title: "The Seven Husbands of Evelyn Hugo",
@@ -84,7 +82,7 @@ const books = [
     year: 2017,
     image: "/images/SevenHusbands.jpg",
     summary:
-      "Reclusive Hollywood icon Evelyn Hugo, now in her late seventies, is finally ready to tell the story of her glamorous and scandalous life. She chooses an unknown magazine reporter, Monique Grant, to write her biography. As Evelyn reveals her journey from aspiring actress to celebrated star, she recounts her rise to fame and the seven husbands she had along the way. Monique listens with rapt attention, realizing that their lives are more intertwined than she could have ever imagined."
+      "Reclusive Hollywood icon Evelyn Hugo is finally ready to tell her story..."
   },
   {
     title: "Me Before You",
@@ -92,7 +90,7 @@ const books = [
     year: 2012,
     image: "/images/MeBeforeYou.jpg",
     summary:
-      "Louisa Clark, an ordinary girl from a small town, is hired to care for Will Traynor, a wealthy young man who was paralyzed in a tragic accident. Will is cynical and has given up on life, but Lou is determined to show him that life is still worth living. As she tries to bring joy back into his world, she finds her own world expanding in ways she never expected, and the two of them form an unbreakable bond. This book is a poignant love story that explores difficult themes of love, loss, and living life to the fullest."
+      "Louisa Clark is hired to care for Will Traynor, a wealthy young man..."
   },
   {
     title: "The Fault in Our Stars",
@@ -100,16 +98,16 @@ const books = [
     year: 2012,
     image: "/images/FaultInStars.jpg",
     summary:
-      "Hazel Grace Lancaster, a teenager with thyroid cancer that has spread to her lungs, is forced by her parents to attend a cancer support group. There, she meets and falls in love with Augustus 'Gus' Waters, a charismatic and witty boy who is in remission from osteosarcoma. Together, they embark on a journey that takes them from their local support group to Amsterdam to meet their favorite reclusive author, exploring themes of life, love, and what it means to truly live despite a terminal illness."
+      "Hazel Grace Lancaster meets Augustus Waters at a cancer support group..."
   },
-  // Crime Category
+  // Crime
   {
     title: "The Thursday Murder Club",
     author: "Richard Osman",
     year: 2020,
     image: "/images/ThursdayMurder.jpg",
     summary:
-      "In a peaceful retirement community, four friends—Elizabeth, Joyce, Ibrahim, and Ron—meet weekly to discuss unsolved cold cases. When a real murder occurs on their doorstep, the group of amateur sleuths find themselves in the middle of a live investigation. Using their unique skills and connections, they outwit the police and interview suspects, proving that age is just a number when it comes to solving a mystery. This book is a witty and charming take on the classic whodunit, filled with lovable characters and clever twists."
+      "In a peaceful retirement community, four friends meet weekly to discuss cold cases..."
   },
   {
     title: "The Silence of the Lambs",
@@ -117,7 +115,7 @@ const books = [
     year: 1988,
     image: "/images/SilenceLambs.png",
     summary:
-      "FBI trainee Clarice Starling is tasked with seeking the help of imprisoned cannibalistic serial killer Dr. Hannibal Lecter to catch another active serial killer, 'Buffalo Bill.' The psychological game between Starling and Lecter forms the core of the story, as Lecter manipulates and torments Starling while providing cryptic clues about Buffalo Bill. The book masterfully blends psychological horror with procedural crime, creating two of the most memorable characters in modern fiction."
+      "FBI trainee Clarice Starling seeks help from Dr. Hannibal Lecter..."
   },
   {
     title: "The Maltese Falcon",
@@ -125,7 +123,7 @@ const books = [
     year: 1930,
     image: "/images/MalteseFalcon.webp",
     summary:
-      "This hard-boiled classic introduces the cynical private detective Sam Spade. He's hired by a woman to find her sister, a case that quickly spirals into a hunt for a priceless, jewel-encrusted statuette of a falcon. As Spade navigates a web of deceit, double-crosses, and murder, he must contend with a cast of eccentric and dangerous characters, all willing to kill to get their hands on the enigmatic bird. Hammett's lean prose and gritty realism helped define the detective genre for generations to come."
+      "This hard-boiled classic introduces the cynical private detective Sam Spade..."
   },
   {
     title: "Gone Girl",
@@ -133,121 +131,173 @@ const books = [
     year: 2012,
     image: "/images/GoneGirl.jpg",
     summary:
-      "On their fifth wedding anniversary, Nick Dunne's wife, Amy, disappears. The police and media quickly become suspicious of Nick, whose behavior seems less than genuine. The narrative is told in alternating perspectives between Nick and Amy's diary entries, revealing the complex, toxic nature of their relationship and the lies they've told each other. The book is a dark, suspenseful tale about marriage, media scrutiny, and the terrifying secrets people keep from those closest to them."
+      "On their fifth wedding anniversary, Nick Dunne's wife, Amy, disappears..."
   }
 ];
 
-const Carousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const Carousel = ({ items = [] }) => {
+  const books = items.length ? items : defaultBooks;
+
+  // Build a longer list so we can loop smoothly
+  const extended = useMemo(() => [...books, ...books, ...books], [books]);
+
+  // Start in the middle chunk so you can go left/right immediately
+  const [index, setIndex] = useState(books.length);
+
+  // Measurement for perfect sliding distance
+  const slotRef = useRef(null);
+  const [slotWidth, setSlotWidth] = useState(0);
+
+  // Hover pause
   const isHoveredRef = useRef(false);
 
-  // This creates a continuous loop
   useEffect(() => {
-    const autoSlide = setInterval(() => {
-      if (!isHoveredRef.current) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % books.length);
+    const measure = () => {
+      if (slotRef.current) {
+        const w = slotRef.current.getBoundingClientRect().width;
+        setSlotWidth(w);
       }
-    }, 2000);
-
-    return () => clearInterval(autoSlide);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, []);
 
-  const handleMouseEnter = () => {
-    isHoveredRef.current = true;
+  // Auto-slide
+  useEffect(() => {
+    const t = setInterval(() => {
+      if (!isHoveredRef.current) setIndex((i) => i + 1);
+    }, 3500);
+    return () => clearInterval(t);
+  }, []);
+
+  const next = () => setIndex((i) => i + 1);
+  const prev = () => setIndex((i) => i - 1);
+
+  // Keep index in a safe middle range (so numbers don't grow forever)
+  useEffect(() => {
+    const chunk = books.length;
+    if (index >= chunk * 2) setIndex((i) => i - chunk);
+    if (index < chunk) setIndex((i) => i + chunk);
+  }, [index, books.length]);
+
+  // leftmost visible slot for a 5-slot viewport
+  const leftMost = index - Math.floor(VISIBLE_SLOTS / 2);
+  const step = slotWidth + GAP_PX;
+  const offsetX = Math.max(0, leftMost * step);
+
+  // Helper: scale/opacity based on distance from center
+  const scaleClass = (i) => {
+    const d = Math.abs(i - index);
+    if (d <= 1) return "scale-100 opacity-100 z-30"; // 3 big (center +/-1)
+    if (d === 2) return "scale-90 opacity-70 z-20";   // peeking
+    if (d === 3) return "scale-85 opacity-40 z-10";
+    return "scale-80 opacity-0 pointer-events-none";  // far items hidden
   };
 
-  const handleMouseLeave = () => {
-    isHoveredRef.current = false;
-  };
+  const handleEnter = () => (isHoveredRef.current = true);
+  const handleLeave = () => (isHoveredRef.current = false);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % books.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + books.length) % books.length);
-  };
+  // Compute viewport width to exactly fit 5 slots (so peeking is clean)
+  const viewportWidth =
+    slotWidth > 0
+      ? VISIBLE_SLOTS * slotWidth + (VISIBLE_SLOTS - 1) * GAP_PX
+      : "100%";
 
   return (
-    <div className="relative w-[80%] mx-auto py-12 bg-[#02052a] text-white my-10 overflow-hidden">
-      {/* Triangles on the sides */}
-      <div className="absolute top-0 left-0 w-8 h-full bg-transparent overflow-hidden">
-        <div className="absolute top-0 left-0 w-8 h-full z-10" style={{ clipPath: 'polygon(0 0, 100% 50%, 0% 100%)', backgroundColor: '#000033' }}></div>
-      </div>
-      <div className="absolute top-0 right-0 w-8 h-full bg-transparent overflow-hidden">
-        <div className="absolute top-0 right-0 w-8 h-full z-10" style={{ clipPath: 'polygon(100% 0, 0% 50%, 100% 100%)', backgroundColor: '#000033' }}></div>
+    <div
+      className="relative w-[95%] mx-auto my-14 overflow-hidden rounded-[28px] py-14"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      style={{
+        background:
+          "radial-gradient(1200px 500px at 50% 15%, rgba(70,120,255,.25), transparent 60%), radial-gradient(800px 800px at 90% 120%, rgba(167,95,255,.22), transparent 60%), linear-gradient(135deg, #0b1537 0%, #061030 100%)"
+      }}
+    >
+      {/* Soft grid overlay for uniqueness */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.08]">
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+            backgroundSize: "60px 60px"
+          }}
+        />
       </div>
 
-      {/* Carousel Wrapper */}
+      {/* Viewport */}
       <div
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${currentIndex * (100 / 4)}%)` }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        className="relative z-10 mx-auto"
+        style={{ width: typeof viewportWidth === "number" ? `${viewportWidth}px` : "100%" }}
       >
-        {/* We use a temporary array that wraps around for the infinite loop illusion */}
-        {[...books, ...books, ...books].map((book, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 w-1/4 px-4 relative overflow-hidden rounded-2xl shadow-lg group bg-[#000033]"
-          >
-            <img
-              src={book.image}
-              alt={book.title}
-              className="w-full h-[360px] object-cover group-hover:brightness-75 transition duration-300"
-            />
-            <div className="p-4 text-center font-semibold text-lg">
-              {book.title}
-            </div>
-            <div className="absolute bottom-[-50px] left-0 w-full flex justify-center transition-all duration-300 group-hover:bottom-4">
-              <Link
-                to={`/book/${index % books.length}`}
-                className="bg-white text-black font-semibold py-2 px-4 rounded-full shadow-md hover:bg-gray-200"
+        {/* Track */}
+        <div
+          className="flex items-end gap-6 will-change-transform"
+          style={{
+            transform: `translateX(-${offsetX}px)`,
+            transition: "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)"
+          }}
+        >
+          {extended.map((book, i) => {
+            const scale = scaleClass(i);
+            return (
+              <div
+                // fixed slot width; first one used for measurement
+                ref={i === 0 ? slotRef : null}
+                key={`${i}-${book.title}`}
+                className="w-[220px] sm:w-[240px] md:w-[280px] flex-shrink-0"
               >
-                Read More
-              </Link>
-            </div>
-          </div>
-        ))}
+                <div
+                  className={`origin-bottom transition-all duration-500 ${scale}`}
+                >
+                  <div className="relative rounded-2xl shadow-lg overflow-hidden bg-[#0a0f2e]/80 backdrop-blur-sm">
+                    <img
+                      src={book.image}
+                      alt={book.title}
+                      className="w-full h-[360px] object-cover"
+                    />
+                    {/* Fixed caption height so bottoms align perfectly */}
+                    <div className="px-4 py-3 text-center font-semibold text-base md:text-lg h-[68px] flex items-center justify-center">
+                      {book.title}
+                    </div>
+                    {/* CTA reveal on hover */}
+                    <div className="absolute left-0 right-0 bottom-3 flex justify-center opacity-0 translate-y-3 transition-all duration-300 hover:opacity-100 hover:translate-y-0">
+                      <Link
+                        to={`/book/${i % books.length}`}
+                        className="bg-white text-black font-semibold py-2 px-4 rounded-full shadow-md hover:bg-gray-200"
+                      >
+                        Read More
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Arrows */}
       <button
-        onClick={prevSlide}
-        className="absolute top-1/2 left-4 -translate-y-1/2 bg-gray-800 p-2 rounded-full shadow-lg z-50 transition-opacity duration-300 hover:opacity-100 opacity-70"
+        onClick={prev}
+        className="absolute left-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 p-3 rounded-full shadow-lg transition"
+        aria-label="Previous"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-white"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 19l-7-7 7-7"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
+
       <button
-        onClick={nextSlide}
-        className="absolute top-1/2 right-4 -translate-y-1/2 bg-gray-800 p-2 rounded-full shadow-lg z-50 transition-opacity duration-300 hover:opacity-100 opacity-70"
+        onClick={next}
+        className="absolute right-5 top-1/2 -translate-y-1/2 z-50 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 p-3 rounded-full shadow-lg transition"
+        aria-label="Next"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-white"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </div>
