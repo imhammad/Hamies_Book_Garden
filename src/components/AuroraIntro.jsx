@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { FiArrowRight } from "react-icons/fi";
+import { Stars } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 
 import { motion, useMotionTemplate, useMotionValue, animate } from 'framer-motion'
 
@@ -63,7 +65,12 @@ const AuroraIntro = () => {
                 Start reviewing now
                 <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
             </motion.button>
+        </div>
 
+        <div className='absolute inset-0 z-0'>
+             <Canvas>
+                <Stars radius={50} count={2500} factor={4} fade speed={2} />
+            </Canvas>
         </div>
 
     </motion.section>
