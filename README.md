@@ -8,9 +8,10 @@
 Welcome to **Hammies Book Garden** — a digital sanctuary for readers.  
 Here, you can wander through shelves of stories, read gentle summaries,  
 share your thoughts through reviews, and discover what others felt before you.  
-It’s not just a website — it’s a growing **cosmos of books and readers**.  
+It’s not just a website — it’s a growing **cosmos of books and readers**. 
 
 ---
+
 
 ## ✨ Features  
 
@@ -21,7 +22,14 @@ It’s not just a website — it’s a growing **cosmos of books and readers**.
 - 🌌 **Aurora & Stars** – A magical intro section with **Framer Motion** + **Three.js**.  
 - 🎥 **Animations** – Smooth, interactive motion powered by **Framer Motion**.  
 - 🪐 **Parallax Hero Section** – A cosmic landing that welcomes you.  
-- 🌟 **Particle Footer** – Animated footer using **JS Particles**.  
+- 🌟 **Particle Footer** – Animated footer using **JS Particles**.
+
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)  
+![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF?logo=vite&logoColor=white&style=for-the-badge)  
+![TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white&style=for-the-badge)  
+![Framer Motion](https://img.shields.io/badge/Animations-FramerMotion-EF5DA8?logo=framer&logoColor=white&style=for-the-badge)  
+![Three.js](https://img.shields.io/badge/3D-Three.js-000000?logo=three.js&logoColor=white&style=for-the-badge)  
+![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?logo=supabase&logoColor=white&style=for-the-badge)  
 
 ---
 
@@ -29,16 +37,16 @@ It’s not just a website — it’s a growing **cosmos of books and readers**.
 
 Here are glimpses of the garden (replace `your-image-path` with actual links):  
 
-![Hero Section](\images\hero.png)  
+![Hero Section](public/images/hero.png)  
 *The parallax entrance where stars guide your reading journey.*  
 
-![Aurora Intro](your-image-path/aurora.png)  
+![Aurora Intro](public/images/aurora.png)  
 *An aurora of light, dancing softly above the words.*  
 
-![Book Listing](your-image-path/books.png)  
+![Book Listing](public/images/books.png)  
 *A shelf where stories bloom and await discovery.*  
 
-![Review System](your-image-path/reviews.png)  
+![Review System](public/images/footer.png)  
 *Where readers leave their echoes for others to hear.*  
 
 ---
@@ -54,24 +62,30 @@ Here are glimpses of the garden (replace `your-image-path` with actual links):
 
 ---
 
-🌱 Contribution
 
-This is an open garden — every new idea is like a seed 🌸.
-Feel free to fork, branch, and create pull requests.
-Whether you’re fixing a bug, adding a feature, or planting a poem —
-your contribution matters.
+## 🌱 Contribution  
 
-📜 License
+This is an open garden — every new idea is like a seed 🌸.  
+Feel free to fork, branch, and create pull requests.  
+Whether you’re fixing a bug, adding a feature, or planting a poem —  
+your contribution matters.  
 
-This project is licensed under the MIT License.
-You are free to use, share, and grow your own garden from it.
+---
 
-🌌 Closing Words
+## 📜 License  
 
-"A book is a dream you hold in your hands.
-In Hammies Book Garden, we hold dreams together."
+This project is licensed under the MIT License.  
+You are free to use, share, and grow your own garden from it.  
 
-🌿 Happy Reading & Contributing!
+---
+
+## 🌌 Closing Words  
+
+> *"A book is a dream you hold in your hands.  
+> In Hammies Book Garden, we hold dreams together."*  
+
+🌿 Happy Reading & Contributing!  
+
 
 ## 🚀 Installation  
 
@@ -91,10 +105,5 @@ npm install
 npm run dev
 
 
-
-🌌 Closing Words
-
-"A book is a dream you hold in your hands.
-In Hammies Book Garden, we hold dreams together."
 
 🌿 Happy Reading & Contributing!
