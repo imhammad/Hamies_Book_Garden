@@ -59,13 +59,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom Text */}
-      <div className="text-center py-6 bg-yellow-700">
-        <p className="text-sm">Hammies © {new Date().getFullYear()}. All rights reserved.</p>
+      <div className="text-center py-6 mt-30">
+        <p className="text-2xl text-black">Hammies © {new Date().getFullYear()}. All rights reserved.</p>
       </div>
       </motion.div>
     </footer>
-      
-
       
   );
 }
