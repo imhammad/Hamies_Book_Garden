@@ -8,6 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 import SignUpButton from './components/SignUpButton';
 import Footer from './components/Footer';
 import Carousel from './components/Carousel';
+import AuroraIntro from './components/AuroraIntro';
 
 const App = () => {
 
@@ -16,6 +17,8 @@ const App = () => {
         <HeroSection />
         {/* <BookGrid />
         <BookDetail /> */}
+
+        <AuroraIntro />
         
 
         <Routes>
