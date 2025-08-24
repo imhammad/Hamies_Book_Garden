@@ -73,6 +73,12 @@ const AuroraIntro = () => {
             </Canvas>
         </div>
 
+
+        {/* Smooth fade at bottom */}
+         <div className="absolute bottom-0 left-0 right-0 h-40 
+         bg-gradient-to-b from-transparent to-[#020617] z-20 pointer-events-none" />
+        
+
     </motion.section>
   )
 }

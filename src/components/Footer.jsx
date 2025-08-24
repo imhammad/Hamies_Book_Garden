@@ -18,7 +18,7 @@ export default function Footer() {
   });
 
   return (
-    <footer ref={ref} className="relative bg-black text-white mt-16">
+    <footer ref={ref} className="relative bg-#030712 text-white mt-16">
       {/* Motion wrapper for the main content */}
       <motion.div
         style={{ y: ySpring }}
