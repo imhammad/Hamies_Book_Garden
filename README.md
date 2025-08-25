@@ -35,7 +35,7 @@ It’s not just a website — it’s a growing **cosmos of books and readers**.
 
 ## 🖼️ Preview  
 
-Here are glimpses of the garden (replace `your-image-path` with actual links):  
+Here are glimpses of the garden:  
 
 ![Hero Section](public/images/hero.png)  
 *The parallax entrance where stars guide your reading journey.*  
