@@ -8,19 +8,23 @@ export default function ReviewSystem({ bookTitle }) {
   const [comment, setComment] = useState("");
   const [user, setUser] = useState(null);
   const [showAnimatedAuthModel, setShowAnimatedAuthModel] = useState(false);
+  const [editingReviewId, setEditingReviewId] = useState(null);
+  const [editRating, setEditRating] = useState(0);
+  const [editComment, setEditComment] = useState("");
 
   useEffect(() => {
     fetchReviews();
     checkUser();
 
-    // Listen for auth changes (login/logout) so username updates instantly
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser(session.user);
-      } else {
-        setUser(null);
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (session?.user) {
+          setUser(session.user);
+        } else {
+          setUser(null);
+        }
       }
-    });
+    );
 
     return () => {
       listener.subscription.unsubscribe();
@@ -75,9 +79,51 @@ export default function ReviewSystem({ bookTitle }) {
     }
   };
 
+  const handleDeleteReview = async (id) => {
+    const { error } = await supabase.from("reviews").delete().eq("id", id);
+    if (error) {
+      alert("Error deleting review: " + error.message);
+    } else {
+      setReviews(reviews.filter((r) => r.id !== id));
+    }
+  };
+
+  const handleEditReview = (review) => {
+    setEditingReviewId(review.id);
+    setEditRating(review.rating);
+    setEditComment(review.comment);
+  };
+
+  const handleSaveEdit = async (id) => {
+    if (!editRating || !editComment.trim()) {
+      alert("Please add a rating and comment");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("reviews")
+      .update({
+        rating: editRating,
+        comment: editComment,
+        last_edited_at: new Date().toISOString(),
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("Error updating review: " + error.message);
+    } else {
+      setEditingReviewId(null);
+      setEditRating(0);
+      setEditComment("");
+      fetchReviews();
+    }
+  };
+
   const averageRating =
     reviews.length > 0
-      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(
+          1
+        )
       : 0;
 
   return (
@@ -147,29 +193,91 @@ export default function ReviewSystem({ bookTitle }) {
               key={r.id}
               className="bg-gray-800 p-4 rounded-lg shadow-md text-white"
             >
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-sm font-bold text-yellow-400">
-                  {r.username || "Unknown"}
-                </span>
-                <span className="text-xs text-gray-400">
-                  {new Date(r.created_at).toLocaleDateString()}
-                </span>
-              </div>
-              <div className="flex items-center mb-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill={i < r.rating ? "gold" : "gray"}
-                    viewBox="0 0 24 24"
-                    stroke="none"
-                    className="w-5 h-5"
+              {editingReviewId === r.id ? (
+                <>
+                  <div className="flex space-x-1 mb-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill={star <= editRating ? "gold" : "gray"}
+                        viewBox="0 0 24 24"
+                        stroke="none"
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={() => setEditRating(star)}
+                      >
+                        <path d="M12 .587l3.668 7.429L24 9.748l-6 5.853 1.416 8.264L12 19.771l-7.416 4.094L6 15.601 0 9.748l8.332-1.732z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <textarea
+                    className="w-full p-2 rounded bg-gray-700 text-white mb-2"
+                    rows="3"
+                    value={editComment}
+                    onChange={(e) => setEditComment(e.target.value)}
+                  />
+                  <button
+                    onClick={() => handleSaveEdit(r.id)}
+                    className="bg-green-500 hover:bg-green-600 text-black px-3 py-1 rounded mr-2"
                   >
-                    <path d="M12 .587l3.668 7.429L24 9.748l-6 5.853 1.416 8.264L12 19.771l-7.416 4.094L6 15.601 0 9.748l8.332-1.732z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-sm">{r.comment}</p>
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEditingReviewId(null)}
+                    className="bg-gray-500 hover:bg-gray-600 text-black px-3 py-1 rounded"
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-bold text-yellow-400">
+                      {r.username || "Unknown"}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {new Date(r.created_at).toLocaleDateString()}
+                      {r.last_edited_at &&
+                        ` (Edited: ${new Date(
+                          r.last_edited_at
+                        ).toLocaleDateString()})`}
+                    </span>
+                  </div>
+                  <div className="flex items-center mb-1">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill={i < r.rating ? "gold" : "gray"}
+                        viewBox="0 0 24 24"
+                        stroke="none"
+                        className="w-5 h-5"
+                      >
+                        <path d="M12 .587l3.668 7.429L24 9.748l-6 5.853 1.416 8.264L12 19.771l-7.416 4.094L6 15.601 0 9.748l8.332-1.732z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm mb-2">{r.comment}</p>
+
+                  {/* Show edit/delete only for review owner */}
+                  {user && user.id === r.user_id && (
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleEditReview(r)}
+                        className="bg-blue-500 hover:bg-blue-600 text-black px-3 py-1 rounded"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteReview(r.id)}
+                        className="bg-red-500 hover:bg-red-600 text-black px-3 py-1 rounded"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           ))
         )}
