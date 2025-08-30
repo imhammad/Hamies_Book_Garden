@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
-import AuthModal from "./AuthModal";
+import AnimatedAuthModel from "./AnimatedAuthModel";
 
 export default function ReviewSystem({ bookTitle }) {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [user, setUser] = useState(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showAnimatedAuthModel, setShowAnimatedAuthModel] = useState(false);
 
   useEffect(() => {
     fetchReviews();
@@ -46,7 +46,7 @@ export default function ReviewSystem({ bookTitle }) {
 
   const handlePostReview = async () => {
     if (!user) {
-      setShowAuthModal(true);
+      setShowAnimatedAuthModel(true);
       return;
     }
     if (!rating || !comment.trim()) {
@@ -175,12 +175,12 @@ export default function ReviewSystem({ bookTitle }) {
         )}
       </div>
 
-      {showAuthModal && (
-        <AuthModal
-          onClose={() => setShowAuthModal(false)}
+      {showAnimatedAuthModel && (
+        <AnimatedAuthModel
+          onClose={() => setShowAnimatedAuthModel(false)}
           onAuthSuccess={(loggedInUser) => {
             setUser(loggedInUser);
-            setShowAuthModal(false);
+            setShowAnimatedAuthModel(false);
           }}
         />
       )}
