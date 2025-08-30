@@ -134,7 +134,7 @@ export default function AnimatedAuthModel({ onClose, onAuthSuccess }) {
             <div className="text-right text-white drop-shadow-sm">
               <h2 className="text-4xl font-extrabold tracking-tight">WELCOME<br/>BACK!</h2>
               <p className="mt-3 max-w-xs text-sm opacity-80">
-                Lorem ipsum, dolor sit amet consectetur adipisicing.
+                We read between the lines, so you can fall between the pages.
               </p>
             </div>
           </div>
